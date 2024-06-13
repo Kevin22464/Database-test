@@ -50,6 +50,22 @@ def print_cars_by_manufacturer(manufacturer):
     print_results(results) 
     db.close()  # Close the database connection
 
+def print_cars_by_speed_range(min_speed, max_speed):
+    db = sqlite3.connect('Database Test (Cars).db')
+    cursor = db.cursor()
+    cursor.execute('''
+        SELECT c.car_name, m.manufacturer AS manufacturer, co.country AS made_in, c.top_speed, c.approx_price
+        FROM Cars c
+        JOIN manufacturer m ON c.manufacturer = m.manu_id
+        JOIN made_in co ON c.made_in = co.made_id
+        WHERE c.top_speed BETWEEN ? AND ?
+        ORDER BY c.top_speed;
+    ''', (min_speed, max_speed))
+    results = cursor.fetchall()
+    print_header()
+    print_results(results)
+    db.close()
+
 def print_header():
     # Print the header of the table with fixed widths for each column
     print(" _________________________________________________________________________________________________________________")
@@ -65,27 +81,30 @@ def print_results(results):
 def main():
     # Main function to handle user input and switch between options
     if login_system():
-        user_input = '0'  # Set user input to '0'
-        while user_input != '3':  # Loop until the user chooses to exit
-            print("What do you want to do?\n1. Print all cars by price\n2. Print cars by manufacturer\n3. Exit program")  # Print menu options
-            user_input = input()  # Get user input
+        user_input = '0'
+        while user_input != '4':
+            print("What do you want to do?\n1. Print all cars by price\n2. Print cars by manufacturer\n3. Print cars by top speed range\n4. Exit program")
+            user_input = input()
             if user_input == '1':
-                print_cars_by_price()  # Print all cars ordered by price
+                print_cars_by_price()
             elif user_input == '2':
                 while True:
-                    manufacturer = input("Please enter manufacturer name (or 'back' to go back, 'exit' to exit program):\n")  # Prompt user to enter a manufacturer name
-                    if manufacturer.lower() == 'back':  # Check if user wants to go back
-                        break  # Exit the inner loop
-                    elif manufacturer.lower() == 'exit':  # Check if user wants to exit the program
-                        user_input = '3' 
-                        break  # Exit the inner loop
+                    manufacturer = input("Please enter manufacturer name (or 'back' to go back, 'exit' to exit program):\n")
+                    if manufacturer.lower() == 'back':
+                        break
+                    elif manufacturer.lower() == 'exit':
+                        user_input = '4'
+                        break
                     else:
-                        print_cars_by_manufacturer(manufacturer)  # Print cars by the specified manufacturer
+                        print_cars_by_manufacturer(manufacturer)
             elif user_input == '3':
-                print("Have a nice day!")
-                break  # Exit the outer loop to end the program
+                min_speed = input("Enter minimum top speed: ")
+                max_speed = input("Enter maximum top speed: ")
+                print_cars_by_speed_range(min_speed, max_speed)
+            elif user_input == '4':
+                break
             else:
-                print("That is not an option.")  # Print an error message for invalid inputs
+                print("That is not an option.")
     else:
         print("ACCESS DENIED")
 
