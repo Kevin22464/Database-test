@@ -1,5 +1,22 @@
 import sqlite3  # Import the sqlite3 module to interact with the SQLite database
 
+def login_system():
+    # Username and password
+    username = "admin"
+    password = "password"
+    
+    # Prompt the user to enter username and password
+    input_username = input("Enter your username: ")
+    input_password = input("Enter your password: ")
+    
+    # Check if the entered username and password match the hardcoded values
+    if input_username == username and input_password == password:
+        print("Login successful!")
+        return True
+    else:
+        print("Incorrect username or password.")
+        return False
+    
 def print_cars_by_price():
     # Print all cars from the database ordered by price
     db = sqlite3.connect('Database Test (Cars).db') 
@@ -47,26 +64,30 @@ def print_results(results):
 
 def main():
     # Main function to handle user input and switch between options
-    user_input = '0'  # Set user input to '0'
-    while user_input != '3':  # Loop until the user chooses to exit
-        print("What do you want to do?\n1. Print all cars by price\n2. Print cars by manufacturer\n3. Exit program")  # Print menu options
-        user_input = input()  # Get user input
-        if user_input == '1':
-            print_cars_by_price()  # Print all cars ordered by price
-        elif user_input == '2':
-            while True:
-                manufacturer = input("Please enter manufacturer name (or 'back' to go back, 'exit' to exit program):\n")  # Prompt user to enter a manufacturer name
-                if manufacturer.lower() == 'back':  # Check if user wants to go back
-                    break  # Exit the inner loop
-                elif manufacturer.lower() == 'exit':  # Check if user wants to exit the program
-                    user_input = '3' 
-                    break  # Exit the inner loop
-                else:
-                    print_cars_by_manufacturer(manufacturer)  # Print cars by the specified manufacturer
-        elif user_input == '3':
-            break  # Exit the outer loop to end the program
-        else:
-            print("That is not an option.")  # Print an error message for invalid inputs
+    if login_system():
+        user_input = '0'  # Set user input to '0'
+        while user_input != '3':  # Loop until the user chooses to exit
+            print("What do you want to do?\n1. Print all cars by price\n2. Print cars by manufacturer\n3. Exit program")  # Print menu options
+            user_input = input()  # Get user input
+            if user_input == '1':
+                print_cars_by_price()  # Print all cars ordered by price
+            elif user_input == '2':
+                while True:
+                    manufacturer = input("Please enter manufacturer name (or 'back' to go back, 'exit' to exit program):\n")  # Prompt user to enter a manufacturer name
+                    if manufacturer.lower() == 'back':  # Check if user wants to go back
+                        break  # Exit the inner loop
+                    elif manufacturer.lower() == 'exit':  # Check if user wants to exit the program
+                        user_input = '3' 
+                        break  # Exit the inner loop
+                    else:
+                        print_cars_by_manufacturer(manufacturer)  # Print cars by the specified manufacturer
+            elif user_input == '3':
+                print("Have a nice day!")
+                break  # Exit the outer loop to end the program
+            else:
+                print("That is not an option.")  # Print an error message for invalid inputs
+    else:
+        print("ACCESS DENIED")
 
 if __name__ == "__main__":
     main()  # Run the main function when the script is executed
