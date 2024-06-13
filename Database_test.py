@@ -6,6 +6,7 @@ def login_system():
     password = "password"
     
     # Ask the user to enter username and password
+    print("Hint : The username and password is hidden in this word : dapgdabmsxiscnwvholnrlkd")
     input_username = input("Enter username: ")
     input_password = input("Enter password: ")
     
@@ -75,17 +76,17 @@ def print_cars_by_speed_range(min_speed, max_speed):
 
 def print_header():
     # Print the header of the table with fixed widths for each column
-    print(" _________________________________________________________________________________________________________________")
-    print(f"| {'Car Name':<35} | {'Manufacturer':<20} | {'Made In':<20} | {'Top Speed':<10} | {'Price':>14} |")
-    print("|-------------------------------------|----------------------|----------------------|------------|----------------|")
+    print(" ______________________________________________________________________________________________________________")
+    print(f"| {'Car Name':<35} | {'Manufacturer':<20} | {'Made In':<20} | {'Top Speed':<10} | {'Price':>11} |")
+    print("|-------------------------------------|----------------------|----------------------|------------|-------------|")
 
 def print_results(results):
     # Print the results of the SQL query in a formatted table
     for car in results: 
         # Print each car's details
-        print(f"| {car[0]:<35} | {car[1]:<20} | {car[2]:<20} | {car[3]:<10} | ${car[4]:>13,.2f} |")  
+        print(f"| {car[0]:<35} | {car[1]:<20} | {car[2]:<20} | {car[3]:<10} | ${car[4]:>10,.0f} |")  
     # Print a closing line for the table
-    print("|_____________________________________|______________________|______________________|____________|________________|")  
+    print("|_____________________________________|______________________|______________________|____________|_____________|")  
 
 def main():
     # Main function to handle user input and switch between options
@@ -111,6 +112,7 @@ def main():
                 max_speed = input("Enter maximum top speed: ")
                 print_cars_by_speed_range(min_speed, max_speed)  # Print cars by top speed range
             elif user_input == '4':
+                print("Have a nice day!")
                 break  # Exit the program
             else:
                 print("That is not an option.")
