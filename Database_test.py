@@ -70,12 +70,3 @@ def main():
 
 if __name__ == "__main__":
     main()  # Run the main function when the script is executed
-
-
-print("hi")
-print("hi")
-print("hi")
-print("hi")
-print("hi")
-print("hi")
-print("hi")
